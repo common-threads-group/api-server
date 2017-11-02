@@ -6,7 +6,7 @@ var blueprint = require ('@onehilltech/blueprint')
 module.exports = {
   connections: {
     $default: {
-      connstr: 'mongodb://localhost/waldo_' + blueprint.env,
+      connstr: 'mongodb://165.227.76.52:32768/waldo_' + blueprint.env,
 
       options : {
         db: {
