@@ -1,13 +1,13 @@
 let blueprint = require('@onehilltech/blueprint');
 let util = require('util');
 
-HelloControler = () => {
-    blueprint.apply(this)
+function HelloController() {
+    blueprint.apply(this);
 }
 
-blueprint.controller(HelloControler);
+blueprint.controller(HelloController);
 
-HelloControler.prototype.hello = () => {
+HelloController.prototype.hello = () => {
     return (req, res) => {
         res.json({
             'greeting': "Hello World!"
@@ -15,4 +15,4 @@ HelloControler.prototype.hello = () => {
     }
 }
 
-module.exports = exports = HelloControler;
+module.exports = exports = HelloController;
