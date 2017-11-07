@@ -2,7 +2,7 @@ let blueprint = require('@onehilltech/blueprint');
 let util = require('util');
 
 function HelloController() {
-    blueprint.apply(this);
+    blueprint.BaseController.call(this);
 }
 
 blueprint.controller(HelloController);
