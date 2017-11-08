@@ -18,8 +18,8 @@ blueprint.controller (SignupController);
  * Returns a JSON containing signup information. 
 */
 SignupController.prototype.signup = () => {
-    const profileId = mongodb.Types.ObjectId();
     return (req, res) => {
+        const profileId = mongodb.Types.ObjectId();
         User.create({
             name: req.body.data.name,
             email: req.body.data.email,
@@ -46,7 +46,7 @@ SignupController.prototype.signup = () => {
                     },
                     relationships: {
                         profile: {
-                            ...profile,
+                            profile: profile,
                             id: profileId,
                             type: "Profile"
                         }
