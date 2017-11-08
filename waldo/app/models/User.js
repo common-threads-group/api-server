@@ -4,7 +4,12 @@ const mongodb = require ('@onehilltech/blueprint-mongodb')
   ;
 
 var schema = new mongodb.Schema({
-  full_name: {type: String, required: true, trim: true}
+  name: {type: String},
+  email: {type: String},
+  password: {type: String},
+  phoneNumber: {type: String},
+  profileId: {type: ObjectId},
+  id: {type: ObjectId, required: true}
 });
 
 const COLLECTION_NAME = 'users';
