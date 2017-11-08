@@ -8,8 +8,8 @@ var schema = new mongodb.Schema({
   email: {type: String},
   password: {type: String},
   phoneNumber: {type: String},
-  profileId: {type: Number},
-  _id: {type: Number, required: true}
+  profileId: {type: String},
+  _id: {type: String, required: true}
 });
 
 const COLLECTION_NAME = 'users';
