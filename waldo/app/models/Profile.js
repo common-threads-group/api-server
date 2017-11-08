@@ -13,7 +13,7 @@ var schema = mongodb.Schema({
   education: {type: String},
   birthdate: {type: Date},
   isNull: {type: Boolean},
-  _id: {type: mongodb.Types.ObjectId}
+  _id: {type: Number}
 });
 
 const COLLECTION_NAME = 'profiles';
