@@ -1,5 +1,8 @@
 let blueprint = require('@onehilltech/blueprint');
+let mongodb = require('@onehilltech/blueprint-mongodb')
 let util = require('util');
+let User = require('../models/User');
+let Profile = require('../models/Profile');
 
 /**
  * This class handles the POST request to login.
@@ -23,6 +26,9 @@ LoginController.prototype.login = () => {
         /**
          * This is where the code for verifing the login will go.
          */
+
+
+
         //TODO: Delete this
         res.json({
             data: {

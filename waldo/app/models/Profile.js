@@ -4,15 +4,14 @@ const mongodb = require ('@onehilltech/blueprint-mongodb')
   ;
 
 var schema = mongodb.Schema({
-  // location : {
-  //   longitude: {type: Number},
-  //   latitude: {type: Number}
-  // },
-  skills: {type: String},
-  about: {type: String},
-  education: {type: String},
-  birthdate: {type: Date},
+  headline: {type: String},
   isNull: {type: Boolean},
+  portfolio: {type: String},
+  resume: {type: String},
+  occupationId: {type: String},
+  expirienceId: {type: String},
+  educationId: {type: String},
+  skillId: {type: String},
   _id: {type: String}
 });
 
