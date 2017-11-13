@@ -3,6 +3,10 @@ let mongodb = require('@onehilltech/blueprint-mongodb')
 let util = require('util');
 let User = require('../models/User');
 let Profile = require('../models/Profile');
+let Education = require('../models/Education');
+let Experience = require('../models/Experience');
+let Occupation = require('../models/Occupation');
+let Skill = require('../models/Skill');
 
 /**
  * This class handles the POST request to login.
@@ -35,27 +39,52 @@ LoginController.prototype.login = () => {
                     if (err) {
                         res.status(500).send(err);
                     }
-                    res.json({
-                        data: {
-                            id: user._id,
-                            type: 'User',
-                            attributes: user
-                        },
-                        relationships: {
-                            profile: {
-                                data: {
-                                    id: profile._id,
-                                    type: 'Profile',
-                                    attributes: profile
-                                },
-                                relationships: {
-                                    skills: [],
-                                    education: [],
-                                    occupation: [],
-                                    expirience: []
-                                }
-                            }
+
+                    Education.find({_id: profile.educationId}, {}, (err, education) => {
+                        if (err) {
+                            res.status(500).send(err);
                         }
+
+                        Experience.find({_id: profile.expirienceId}, {}, (err, expirience) => {
+                            if (err) {
+                                res.status(500).send(err);
+                            }
+
+                            Occupation.find({_id: profile.occupationId}, {}, (err, occupation) => {
+                                if (err) {
+                                    res.status(500).send(err);
+                                }
+
+                                Skill.find({_id: profile.skillId}, {}, (err, skill) => {
+                                    if (err) {
+                                        res.status(500).send(err);
+                                    }
+
+                                    res.json({
+                                        data: {
+                                            id: user._id,
+                                            type: 'User',
+                                            attributes: user
+                                        },
+                                        relationships: {
+                                            profile: {
+                                                data: {
+                                                    id: profile._id,
+                                                    type: 'Profile',
+                                                    attributes: profile
+                                                },
+                                                relationships: {
+                                                    skills: skill,
+                                                    education: education,
+                                                    occupation: occupation,
+                                                    expirience: expirience
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            });
+                        });
                     });
                 });
 
