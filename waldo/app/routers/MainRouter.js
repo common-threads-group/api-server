@@ -6,9 +6,6 @@ let cors = require ('cors')
 
 
 module.exports = exports = {
-  '/hello' : {
-    get : { action : 'HelloController@hello'}
-  },
   '/gatekeeper' : [
     cors(),
     blueprint('router://@onehilltech/blueprint-gatekeeper:v1')

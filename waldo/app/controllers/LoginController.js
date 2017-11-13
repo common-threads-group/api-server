@@ -22,16 +22,15 @@ blueprint.controller(LoginController);
 */
 LoginController.prototype.login = () => {
     return (req, res) => {
-        User.findOne({'email': req.body.data.email}).then((err, user) => {
+        User.findOne({'email': req.body.data.email}, {}, (err, user) => {
             if (err) {
                 res.status(500).send(err);
             }
             if(user == null) {
                 res.status(404).send("User with that email Not Found");
-            }
-            if(user.password === req.body.data.password) {
+            } else if(user.password === req.body.data.password) {
                 //Correct Email and Password
-                Profile.findOne({_id: user.profileId}).then((err, profile) => {
+                Profile.findOne({_id: user.profileId}, {},(err, profile) => {
                     if (err) {
                         res.status(500).send(err);
                     }
@@ -59,12 +58,10 @@ LoginController.prototype.login = () => {
                     });
                 });
 
-
-
             } else {
                 res.status(401).send("Incorrect Password");
             }
-        })
+        });
     }
 }
 
