@@ -4,7 +4,7 @@ const mongodb = require ('@onehilltech/blueprint-mongodb')
   ;
 
 var schema = new mongodb.Schema({
-  icon: {type: String},
+  icon: {type: String}, //This is a url to a file in S3
   title: {type: String},
   schoolName: {type: String},
   location : {
@@ -14,7 +14,7 @@ var schema = new mongodb.Schema({
   startDate: {type: Date},
   endDate: {type: Date},
   about: {type: String},
-  id: {type: String}
+  _id: {type: String}
 });
 
 const COLLECTION_NAME = 'educations'
