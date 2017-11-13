@@ -1,4 +1,5 @@
 let blueprint = require('@onehilltech/blueprint');
+let mongodb = require('@onehilltech/blueprint-mongodb')
 let util = require('util');
 let User = require('../models/User');
 let Profile = require('../models/Profile');

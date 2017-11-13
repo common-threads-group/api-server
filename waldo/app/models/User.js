@@ -4,10 +4,13 @@ const mongodb = require ('@onehilltech/blueprint-mongodb')
   ;
 
 var schema = new mongodb.Schema({
-  name: {type: String},
+  firstName: {type: String},
+  lastName: {type: String},
   email: {type: String},
   password: {type: String},
-  phoneNumber: {type: String},
+  city: {type: String},
+  state: {type: String},
+  radius: {type: Number},
   profileId: {type: String},
   _id: {type: String, required: true}
 });
