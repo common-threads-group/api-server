@@ -14,7 +14,7 @@ var schema = new mongodb.Schema({
   startDate: {type: Date},
   endDate: {type: Date},
   about: {type: String},
-  id: {type: ObjectId}
+  id: {type: String}
 });
 
 const COLLECTION_NAME = 'experiences'
