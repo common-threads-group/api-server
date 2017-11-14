@@ -83,7 +83,7 @@ UserController.prototype.get = () => {
 /**
  * Returns a JSON containing user information. 
 */
-SignupController.prototype.create = () => {
+UserController.prototype.create = () => {
     return (req, res) => {
         const profileId = mongodb.Types.ObjectId();
         User.create({
