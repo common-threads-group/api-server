@@ -28,14 +28,5 @@ module.exports = {
     };
 
     return callback (null, client);
-  }),
-  accounts: [
-    {
-      _id: new ObjectId ('58ed92f64da0861f6aeb98cf'),
-      email: 'tester@waldo.com',
-      username: 'waldo',
-      password: 'waldo',
-      created_by: dab.ref ('clients.0')
-    }
-  ]
+  })
 };
