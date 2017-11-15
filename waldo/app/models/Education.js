@@ -7,13 +7,12 @@ var schema = new mongodb.Schema({
   icon: {type: String}, //This is a url to a file in S3
   title: {type: String},
   schoolName: {type: String},
-  location : {
-      longitude: {type: Number},
-      latitude: {type: Number}
-  },
+  city: {type: String},
+  state: {type: String},
   startDate: {type: Date},
   endDate: {type: Date},
   about: {type: String},
+  profileId: {type: String},
   _id: {type: String}
 });
 
