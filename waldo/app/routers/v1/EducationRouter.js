@@ -9,6 +9,6 @@ module.exports = exports = {
         delete: {action : 'EducationController@delete'}
     },
     '/profile/education/:profileId': {
-        get: {action: 'EducationController@get'}
+        get: {action: 'EducationController@getByProfile'}
     }
 }

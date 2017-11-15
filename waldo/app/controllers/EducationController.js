@@ -37,19 +37,78 @@ class EducationController {
     }
 
     
-    getSingle() {
+    getOne() {
         return (req, res) => {
-            
+            Eductation.findOne({_id: req.params.educationId}, {}, (err, education) => {
+                if (err) {
+                    res.status(500).send(err);
+                } else {
+                    es.json({
+                        data: {
+                            id: education._id,
+                            type: 'Education',
+                            attributes: education
+                        }
+                    });
+                }
+            })
         };
     }
 
     delete() {
         return (req, res) => {
-            
+            Eductation.remove({_id: req.params.educationId}, (err) => {
+                if (err) {
+                    res.status(500).send(err);
+                } else {
+                    res.json({
+                        data: {
+                            id: 1,
+                            type: 'Message',
+                            attributes: {
+                                message: "Education Document was deleted. {_id: " + req.params.educationId + "}"
+                            }
+                        }
+                    });
+                }
+            });
         };
     }
 
     update() {
+        return (req, res) => {
+            const requestEducation = req.body.data.attributes;
+            Education.findOne({_id: req.params.educationId}, {}, (err, education) => {
+                if (err) {
+                    res.status(500).send(err);
+                } else {
+                    let updatedEducation = {
+                        icon: requestEducation.icon || education.icon,
+                        title: requestEducation.title || education.title,
+                        schoolName: requestEducation.schoolName || education.schoolName,
+                        city: requestEducation.city || education.city,
+                        state: requestEducation.state || education.state,
+                        startDate: requestEducation.startDate || education.startDate,
+                        endDate: requestEducation.endDate || education.endDate,
+                        about: requestEducation.about || education.about
+                    };
+                    Education.findOneAndReplace({_id: education._id}, updatedEducation, {}, (err, callbackEducation) => {
+                        if (err) {
+                            res.status(500).send(err);
+                        } else {
+                            res.json({
+                                id: callbackEducation._id,
+                                type: 'Education',
+                                attributes: callbackEducation 
+                            });
+                        }
+                    });
+                }
+            });
+        };
+    }
+
+    getByProfile() {
         return (req, res) => {
             
         };
