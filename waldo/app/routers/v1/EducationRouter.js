@@ -9,6 +9,6 @@ module.exports = exports = {
         put: {action : 'EducationController@update'}
     },
     '/profile/education/:profileId': {
-        get: {}
+        get: {action: 'EducationController@get'}
     }
 }
