@@ -36,6 +36,7 @@ class EducationController {
         };
     }
 
+    
     getSingle() {
         return (req, res) => {
             
@@ -53,14 +54,6 @@ class EducationController {
             
         };
     }
-
-    get() {
-        return (req, res) => {
-            
-        };
-    }
-
-
 }
 
 blueprint.controller(EducationController);
