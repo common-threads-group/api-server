@@ -85,13 +85,22 @@ UserController.prototype.get = () => {
 */
 UserController.prototype.create = () => {
     return (req, res) => {
+        
+        const userData = {
+            firstName: req.body.data.attributes.firstName,
+            lastName:  req.body.data.attributes.lastName,
+            city: req.body.data.attributes.city,
+            state: req.body.data.attributes.state,
+            radius: req.body.data.attributes.radius
+        };
         const profileId = mongodb.Types.ObjectId();
+        
         User.create({
-            firstName: req.body.data.firstName,
-            lastName:  req.body.data.lastName,
-            city: req.body.data.city,
-            state: req.body.data.state,
-            radius: req.body.data.radius,
+            firstName: userData.firstName,
+            lastName:  userData.lastName,
+            city: userData.city,
+            state: userData.state,
+            radius: userData.radius,
             profileId: profileId,
             _id: req.params.accountId
         }).then((user, err) => {
