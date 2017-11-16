@@ -110,7 +110,21 @@ class EducationController {
 
     getByProfile() {
         return (req, res) => {
-            
+            Eductation.find({profileId: req.params.profileId}, {}, (err, education) => {
+                if (err) {
+                    res.status(500).send(err);
+                } else {
+                    res.json({
+                        data: education.map((i) => {
+                            return {
+                                id: i._id,
+                                type: 'Education',
+                                attributes: i
+                            };
+                        })
+                    });
+                }
+            });
         };
     }
 }
