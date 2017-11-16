@@ -4,7 +4,7 @@ module.exports = exports = {
 
     },
     '/education/:educationId' : {
-        get: {action : 'EducationController@getSingle'},
+        get: {action : 'EducationController@getOne'},
         put: {action : 'EducationController@update'},
         delete: {action : 'EducationController@delete'}
     },

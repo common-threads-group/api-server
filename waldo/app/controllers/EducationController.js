@@ -1,6 +1,7 @@
 const blueprint = require('@onehilltech/blueprint');
 const mongodb = require('@onehilltech/blueprint-mongodb');
-const Eductation = require('../models/Education');
+const Education = require('../models/Education');
+const ObjectId = require('@onehilltech/blueprint-mongodb').Types.ObjectId;
 
 
 class EducationController {
@@ -19,7 +20,8 @@ class EducationController {
                 startDate: newEducation.startDate,
                 endDate: newEducation.endDate,
                 about: newEducation.about,
-                profileId: req.params.profileId
+                profileId: req.params.profileId,
+                _id: new ObjectId()
             }, (err, education) => {
                 if (err) {
                     res.status(500).send(err);
@@ -39,11 +41,11 @@ class EducationController {
     
     getOne() {
         return (req, res) => {
-            Eductation.findOne({_id: req.params.educationId}, {}, (err, education) => {
+            Education.findOne({_id: req.params.educationId}, {}, (err, education) => {
                 if (err) {
                     res.status(500).send(err);
                 } else {
-                    es.json({
+                    res.json({
                         data: {
                             id: education._id,
                             type: 'Education',
@@ -57,7 +59,7 @@ class EducationController {
 
     delete() {
         return (req, res) => {
-            Eductation.remove({_id: req.params.educationId}, (err) => {
+            Education.remove({_id: req.params.educationId}, (err) => {
                 if (err) {
                     res.status(500).send(err);
                 } else {
@@ -81,6 +83,8 @@ class EducationController {
             Education.findOne({_id: req.params.educationId}, {}, (err, education) => {
                 if (err) {
                     res.status(500).send(err);
+                } else if (education == null) {
+                    res.status(404).send("Education not Found");
                 } else {
                     let updatedEducation = {
                         icon: requestEducation.icon || education.icon,
@@ -92,7 +96,7 @@ class EducationController {
                         endDate: requestEducation.endDate || education.endDate,
                         about: requestEducation.about || education.about
                     };
-                    Education.findOneAndReplace({_id: education._id}, updatedEducation, {}, (err, callbackEducation) => {
+                    Education.findOneAndUpdate({_id: education._id}, updatedEducation, {}, (err, callbackEducation) => {
                         if (err) {
                             res.status(500).send(err);
                         } else {
@@ -110,7 +114,7 @@ class EducationController {
 
     getByProfile() {
         return (req, res) => {
-            Eductation.find({profileId: req.params.profileId}, {}, (err, education) => {
+            Education.find({profileId: req.params.profileId}, {}, (err, education) => {
                 if (err) {
                     res.status(500).send(err);
                 } else {
