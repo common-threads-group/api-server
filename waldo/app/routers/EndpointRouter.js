@@ -9,8 +9,5 @@ const corsOptions = {
 };
 
 module.exports = {
-  '/v1': {
-    use: cors (corsOptions),
-    policy: 'gatekeeper.auth.bearer'
-  }
+  '/v1': cors(corsOptions)
 };
