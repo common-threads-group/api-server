@@ -9,7 +9,9 @@ let Occupation = require('../models/Occupation');
 let Skill = require('../models/Skill');
 
 
-
+/**
+ * Handles requests for the User Collection.
+ */
 class UserController {
     constructor() {
         blueprint.BaseController.call(this);
@@ -83,6 +85,7 @@ class UserController {
 
 
     /**
+     * Creates a new user Given an AccountId.
      * Returns a JSON containing user information. 
     */
     create() {
