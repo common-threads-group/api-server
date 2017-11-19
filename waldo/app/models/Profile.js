@@ -5,8 +5,8 @@ const mongodb = require ('@onehilltech/blueprint-mongodb')
 
 var schema = mongodb.Schema({
    location : {
-     city: {type: Number},
-     state: {type: Number}
+     city: {type: String},
+     state: {type: String}
    },
   skills: {type: String},
   about: {type: String},
