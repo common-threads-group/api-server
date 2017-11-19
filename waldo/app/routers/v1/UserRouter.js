@@ -1,5 +1,5 @@
 module.exports = exports = {
-    '/user/:accountId' : {
+    '/users/:accountId' : {
         post : { action : 'UserController@create' },
         get : { action : 'UserController@get' }
     }
