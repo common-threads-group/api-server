@@ -3,12 +3,21 @@ const mongodb = require('@onehilltech/blueprint-mongodb');
 const Education = require('../models/Education');
 const ObjectId = require('@onehilltech/blueprint-mongodb').Types.ObjectId;
 
-
+/**
+ * This class handles the requests for Education data.
+ */
 class EducationController {
+    /**
+     * Allows Controller to hook into bluepint.
+     */
     constructor() {
         blueprint.BaseController.call(this);
     }
 
+    /**
+     * Handles adding a new Education to the DB.
+     * This requires a profileId to proint back to.
+     */
     add() {
         return (req, res) => {
             const newEducation = req.body.data.attributes;
@@ -38,7 +47,9 @@ class EducationController {
         };
     }
 
-    
+    /**
+     * Handles getting a single Education document, by educationId.
+     */
     getOne() {
         return (req, res) => {
             Education.findOne({_id: req.params.educationId}, {}, (err, education) => {
@@ -57,6 +68,9 @@ class EducationController {
         };
     }
 
+    /**
+     * Removes a single Education document, by educationId.
+     */
     delete() {
         return (req, res) => {
             Education.remove({_id: req.params.educationId}, (err) => {
@@ -77,6 +91,10 @@ class EducationController {
         };
     }
 
+    /**
+     * Updates an education Document.
+     * This will only change the fields that are sent, any null fields in the PUT body, will not change the document.
+     */
     update() {
         return (req, res) => {
             const requestEducation = req.body.data.attributes;
@@ -112,6 +130,9 @@ class EducationController {
         };
     }
 
+    /**
+     * This will find and return all of the education documents with a matching profileId.
+     */
     getByProfile() {
         return (req, res) => {
             Education.find({profileId: req.params.profileId}, {}, (err, education) => {
@@ -133,6 +154,7 @@ class EducationController {
     }
 }
 
+//Registers this Controller with Blueprint.
 blueprint.controller(EducationController);
 
 module.exports = exports = EducationController;
