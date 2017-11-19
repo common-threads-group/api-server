@@ -139,7 +139,7 @@ UserController.prototype.create = () => {
 
             });
         } else {
-            res.status(400).send("Bad request, body needs to include body.data.attributes");
+            res.status(400).send("Bad request, body needs to include body.data.attributes\nYou sent: " + JSON.stringify(req.body));
         }
     };
 };
