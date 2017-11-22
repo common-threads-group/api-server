@@ -30,67 +30,71 @@ class UserController {
                 Profile.findOne({_id: user.profileId}, {},(err, profile) => {
                     if (err) {
                         res.status(500).send(err);
-                    }
+                    } else if (profile == null) {
+                        res.status(404).send("User Not found")
+                    } else {
 
-                    Education.find({profileId: profile._id}, {}, (err, education) => {
-                        if (err) {
-                            res.status(500).send(err);
-                        }
-
-                        Experience.find({profileId: profile._id}, {}, (err, expirience) => {
+                        Education.find({profileId: profile._id}, {}, (err, education) => {
                             if (err) {
                                 res.status(500).send(err);
                             }
 
-                            Occupation.find({profileId: profile._id}, {}, (err, occupation) => {
+                            Experience.find({profileId: profile._id}, {}, (err, expirience) => {
                                 if (err) {
                                     res.status(500).send(err);
                                 }
 
-                                Skill.find({profileId: profile._id}, {}, (err, skill) => {
+                                Occupation.find({profileId: profile._id}, {}, (err, occupation) => {
                                     if (err) {
                                         res.status(500).send(err);
                                     }
 
-                                    res.json({
-                                        data: {
-                                            id: user._id,
-                                            type: 'User',
-                                            attributes: user
-                                        },
-                                        relationships: {
-                                            profile: {
-                                                data: {
-                                                    id: profile._id,
-                                                    type: 'Profile',
-                                                    attributes: profile
-                                                },
-                                                relationships: {
-                                                    skills: skill,
-                                                    education: education,
-                                                    occupation: occupation,
-                                                    expirience: expirience
+                                    Skill.find({profileId: profile._id}, {}, (err, skill) => {
+                                        if (err) {
+                                            res.status(500).send(err);
+                                        }
+
+                                        res.json({
+                                            data: {
+                                                id: user._id,
+                                                type: 'User',
+                                                attributes: user
+                                            },
+                                            relationships: {
+                                                profile: {
+                                                    data: {
+                                                        id: profile._id,
+                                                        type: 'Profile',
+                                                        attributes: profile
+                                                    },
+                                                    relationships: {
+                                                        skills: skill,
+                                                        education: education,
+                                                        occupation: occupation,
+                                                        expirience: expirience
+                                                    }
                                                 }
                                             }
-                                        }
+                                        });
                                     });
                                 });
                             });
                         });
-                    });
+                    }
                 });
-            });
-        }
-    }
+            }
+        });
+    };
+};
 
+/**
+ * Returns a JSON containing user information. 
+*/
+UserController.prototype.create = () => {
+    return (req, res) => {
+        
+        if (req.body && req.body.data && req.body.data.attributes) {
 
-    /**
-     * Creates a new user Given an AccountId.
-     * Returns a JSON containing user information. 
-    */
-    create() {
-        return (req, res) => {
-            
             const userData = {
                 firstName: req.body.data.attributes.firstName,
                 lastName:  req.body.data.attributes.lastName,
@@ -131,16 +135,15 @@ class UserController {
                                 type: "Profile"
                             }
                         }
-                    })
-                })
+                    });
+                });
 
-            })
+            });
+        } else {
+            res.status(400).send("Bad request, body needs to include body.data.attributes\nYou sent: " + JSON.stringify(req.body));
         }
-    }
-}
-    
-
-blueprint.controller(UserController);
+    };
+};
 
 
 module.exports = exports = UserController;
