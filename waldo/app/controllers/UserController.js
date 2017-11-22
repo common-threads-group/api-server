@@ -22,63 +22,69 @@ UserController.prototype.get = () => {
         User.findOne({_id: req.params.accountId}, {}, (err, user) => {
             if (err) {
                 res.status(500).send(err);
-            }
+            } else if (user == null) {
+                res.status(404).send("User Not found")
+            } else {
 
-            Profile.findOne({_id: user.profileId}, {},(err, profile) => {
-                if (err) {
-                    res.status(500).send(err);
-                }
-
-                Education.find({profileId: profile._id}, {}, (err, education) => {
+                Profile.findOne({_id: user.profileId}, {},(err, profile) => {
                     if (err) {
                         res.status(500).send(err);
-                    }
+                    } else if (profile == null) {
+                        res.status(404).send("User Not found")
+                    } else {
 
-                    Experience.find({profileId: profile._id}, {}, (err, expirience) => {
-                        if (err) {
-                            res.status(500).send(err);
-                        }
-
-                        Occupation.find({profileId: profile._id}, {}, (err, occupation) => {
+                        Education.find({profileId: profile._id}, {}, (err, education) => {
                             if (err) {
                                 res.status(500).send(err);
                             }
 
-                            Skill.find({profileId: profile._id}, {}, (err, skill) => {
+                            Experience.find({profileId: profile._id}, {}, (err, expirience) => {
                                 if (err) {
                                     res.status(500).send(err);
                                 }
 
-                                res.json({
-                                    data: {
-                                        id: user._id,
-                                        type: 'User',
-                                        attributes: user
-                                    },
-                                    relationships: {
-                                        profile: {
+                                Occupation.find({profileId: profile._id}, {}, (err, occupation) => {
+                                    if (err) {
+                                        res.status(500).send(err);
+                                    }
+
+                                    Skill.find({profileId: profile._id}, {}, (err, skill) => {
+                                        if (err) {
+                                            res.status(500).send(err);
+                                        }
+
+                                        res.json({
                                             data: {
-                                                id: profile._id,
-                                                type: 'Profile',
-                                                attributes: profile
+                                                id: user._id,
+                                                type: 'User',
+                                                attributes: user
                                             },
                                             relationships: {
-                                                skills: skill,
-                                                education: education,
-                                                occupation: occupation,
-                                                expirience: expirience
+                                                profile: {
+                                                    data: {
+                                                        id: profile._id,
+                                                        type: 'Profile',
+                                                        attributes: profile
+                                                    },
+                                                    relationships: {
+                                                        skills: skill,
+                                                        education: education,
+                                                        occupation: occupation,
+                                                        expirience: expirience
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
+                                        });
+                                    });
                                 });
                             });
                         });
-                    });
+                    }
                 });
-            });
+            }
         });
-    }
-}
+    };
+};
 
 /**
  * Returns a JSON containing user information. 
@@ -86,52 +92,57 @@ UserController.prototype.get = () => {
 UserController.prototype.create = () => {
     return (req, res) => {
         
-        const userData = {
-            firstName: req.body.data.attributes.firstName,
-            lastName:  req.body.data.attributes.lastName,
-            city: req.body.data.attributes.city,
-            state: req.body.data.attributes.state,
-            radius: req.body.data.attributes.radius
-        };
-        const profileId = mongodb.Types.ObjectId();
-        
-        User.create({
-            firstName: userData.firstName,
-            lastName:  userData.lastName,
-            city: userData.city,
-            state: userData.state,
-            radius: userData.radius,
-            profileId: profileId,
-            _id: req.params.accountId
-        }).then((user, err) => {
-            if (err) {
-                res.status(500).send(err);
-            }
-            Profile.create({
-                _id: profileId,
-                isNull: true
-            }).then((profile, err) => {
+        if (req.body && req.body.data && req.body.data.attributes) {
+
+            const userData = {
+                firstName: req.body.data.attributes.firstName,
+                lastName:  req.body.data.attributes.lastName,
+                city: req.body.data.attributes.city,
+                state: req.body.data.attributes.state,
+                radius: req.body.data.attributes.radius
+            };
+            const profileId = mongodb.Types.ObjectId();
+            
+            User.create({
+                firstName: userData.firstName,
+                lastName:  userData.lastName,
+                city: userData.city,
+                state: userData.state,
+                radius: userData.radius,
+                profileId: profileId,
+                _id: req.params.accountId
+            }).then((user, err) => {
                 if (err) {
                     res.status(500).send(err);
                 }
-                res.json({
-                    data: {
-                        id: user._id,
-                        type: String
-                    },
-                    relationships: {
-                        profile: {
-                            attributes: profile,
-                            id: profileId,
-                            type: "Profile"
-                        }
+                Profile.create({
+                    _id: profileId,
+                    isNull: true
+                }).then((profile, err) => {
+                    if (err) {
+                        res.status(500).send(err);
                     }
-                })
-            })
+                    res.json({
+                        data: {
+                            id: user._id,
+                            type: String
+                        },
+                        relationships: {
+                            profile: {
+                                attributes: profile,
+                                id: profileId,
+                                type: "Profile"
+                            }
+                        }
+                    });
+                });
 
-        })
-    }
-}
+            });
+        } else {
+            res.status(400).send("Bad request, body needs to include body.data.attributes\nYou sent: " + JSON.stringify(req.body));
+        }
+    };
+};
 
 
 module.exports = exports = UserController;
