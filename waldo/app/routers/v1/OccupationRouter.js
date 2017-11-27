@@ -1,12 +1,14 @@
 module.exports = exports = {
-    '/occupation/:profileId' :{
-        post : { action : 'OccupationRouter@postProfileId' },
-        get : { action : 'OccupationRouter@getProfileId' }
+    '/occupation/:profileId' : {
+        post: {action : 'OccupationController@add'}
+
     },
-    '/occupation/:occupationId':{
-        put : { action : 'OccupationRouter@putOccupationId' },
-        get : { action : 'OccupationRouter@getOccupationId' },
-        delete : { action : 'OccupationRouter@deleteOccupationId' }
+    '/occupation/:occupationId' : {
+        get: {action : 'OccupationController@getOne'},
+        put: {action : 'OccupationController@update'},
+        delete: {action : 'OccupationController@delete'}
+    },
+    '/profile/occupation/:profileId': {
+        get: {action: 'OccupationController@getByProfile'}
     }
-    
 }
