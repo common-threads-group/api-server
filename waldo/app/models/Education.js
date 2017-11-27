@@ -9,6 +9,7 @@ var schema = new mongodb.Schema({
   startDate: {type: Date},
   endDate: {type: Date},
   about: {type: String},
+  profileId: {type: String},
   _id: {type: String}
 });
 
