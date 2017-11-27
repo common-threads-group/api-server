@@ -55,6 +55,8 @@ class EducationController {
             Education.findOne({_id: req.params.educationId}, {}, (err, education) => {
                 if (err) {
                     res.status(500).send(err);
+                } else if (education == null) {
+                    res.status(404).send("Education not Found");
                 } else {
                     res.json({
                         data: {
@@ -140,7 +142,7 @@ class EducationController {
                     res.status(500).send(err);
                 } else {
                     res.json({
-                        data: education.map((i) => {
+                        data : education.map((i) => {
                             return {
                                 id: i._id,
                                 type: 'Education',

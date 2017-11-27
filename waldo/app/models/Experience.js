@@ -4,7 +4,7 @@ var schema = new mongodb.Schema({
   icon: {type: String},
   title: {type: String},
   companyName: {type: String},
-  jcity: {type: String},
+  city: {type: String},
   state: {type: String},
   startDate: {type: Date},
   endDate: {type: Date},

@@ -43,6 +43,8 @@ class ExperienceController {
             Experience.findOne({_id: req.params.experienceId}, {}, (err, experiece) => {
                 if (err) {
                     res.status(500).send(err);
+                } else if (experiece == null) {
+                    res.status(404).send("Experience not Found");
                 } else {
                     res.json({
                         data: {
@@ -113,12 +115,12 @@ class ExperienceController {
 
     getByProfile() {
         return (req, res) => {
-            Education.find({profileId: req.params.profileId}, {}, (err, experience) => {
+            Experience.find({profileId: req.params.profileId}, {}, (err, experience) => {
                 if (err) {
                     res.status(500).send(err);
                 } else {
                     res.json({
-                        data:education.map((i) => {
+                        data : experience.map((i) => {
                             return {
                                 id: i._id,
                                 type: 'Experience',
